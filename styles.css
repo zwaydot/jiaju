@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    color: #333;
+    text-align: left;
+    padding: 2em 2em 0 2em;
+}
+
+#brand-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1em;
+    padding: 2em;
+}
+
+.brand {
+    background-color: #f4f4f4;
+    padding: 1em;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.brand:hover {
+    background-color: #ccc;
+}
+
+footer {
+    text-align: left;
+    padding: 2em;
+    color: #333;
+}
