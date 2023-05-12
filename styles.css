@@ -1,37 +1,44 @@
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
+    margin: 0;
+    padding: 0;
     background-color: #f4f4f4;
 }
 
 header {
-    color: #333;
-    text-align: left;
-    padding: 2em 2em 0 2em;
-}
-
-#brand-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1em;
-    padding: 2em;
-}
-
-.brand {
     background-color: #f4f4f4;
-    padding: 1em;
-    text-align: center;
-    text-decoration: none;
-    color: black;
-    display: block;
+    color: #333;
+    padding: 20px 0 0 30px;
+    text-align: left;
 }
 
-.brand:hover {
-    background-color: #ccc;
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.brand-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+.brand-card img {
+    max-width: 100%;
 }
 
 footer {
-    text-align: left;
-    padding: 2em;
+    background-color: #f4f4f4;
     color: #333;
+    text-align: left;
+    padding: 20px 0 0 30px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
