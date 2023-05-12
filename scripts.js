@@ -14,7 +14,6 @@ const fetchNotionData = async () => {
     return await response.json();
 };
 
-
 window.onload = async () => {
     try {
         const data = await fetchNotionData();
@@ -22,26 +21,26 @@ window.onload = async () => {
         for (const item of data.results) {
             const brandElement = document.createElement('div');
             brandElement.classList.add('brand-card');
-            
+
             const brandName = document.createElement('h2');
-            brandName.textContent = item.properties.Brand.title[0].plain_text;  
+            brandName.textContent = item.properties.Brand?.title[0]?.plain_text || 'Unknown';
             brandElement.appendChild(brandName);
-            
+
             const intro = document.createElement('p');
-            intro.textContent = item.properties.Introduction.rich_text[0].plain_text;
+            intro.textContent = item.properties.Introduction?.rich_text[0]?.plain_text || 'No Introduction';
             brandElement.appendChild(intro);
 
             const logo = document.createElement('img');
-            logo.src = item.properties.Logo.url;
+            logo.src = item.properties.Logo?.url || 'No Logo';
             brandElement.appendChild(logo);
 
             const url = document.createElement('a');
-            url.href = item.properties.URL.url;
+            url.href = item.properties.URL?.url || '#';
             url.textContent = "Visit website";
             brandElement.appendChild(url);
-            
+
             const picture = document.createElement('img');
-            picture.src = item.properties.Picture.url;
+            picture.src = item.properties.Picture?.url || 'No Picture';
             brandElement.appendChild(picture);
 
             brandsElement.appendChild(brandElement);
