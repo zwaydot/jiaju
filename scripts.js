@@ -14,6 +14,7 @@ const fetchNotionData = async () => {
     return await response.json();
 };
 
+
 window.onload = async () => {
     try {
         const data = await fetchNotionData();

@@ -2,11 +2,10 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f8f8f8;
 }
 
 header {
-    background-color: #f4f4f4;
     color: #333;
     padding: 20px 0 0 30px;
     text-align: left;
@@ -35,9 +34,9 @@ main {
 
 footer {
     background-color: #f4f4f4;
-    color: #333;
+    color: #666;
     text-align: left;
-    padding: 20px 0 0 30px;
+    padding: 0px 0 0 30px;
     position: fixed;
     bottom: 0;
     width: 100%;
