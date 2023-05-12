@@ -7,8 +7,12 @@ body {
 
 header {
     color: #333;
-    padding: 20px 0 0 30px;
+    padding: 10px 0 5px 30px;
     text-align: left;
+    position: fixed;
+    background-color: #f4f4f4;
+    width: 100%;
+    z-index: 999;
 }
 
 main {
@@ -16,6 +20,7 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
+    padding-top: 100px;  
 }
 
 .brand-card {
