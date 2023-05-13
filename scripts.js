@@ -39,37 +39,29 @@ window.onload = async () => {
             brandElement.appendChild(intro);
 
             const logoFile = item.properties.Logo?.files[0];
-            if (logoFile) {
+            if (logoFile && logoFile.file) {
                 const logo = document.createElement('img');
-                logo.src = logoFile.file.url; // 将logoFile.url更改为logoFile.file.url
+                logo.src = logoFile.file.url; 
                 brandElement.appendChild(logo);
             } else {
                 console.warn('No Logo for item:', item);
             }
-            
+
             const pictureFile = item.properties.Picture?.files[0];
-            if (pictureFile) {
+            if (pictureFile && pictureFile.file) {
                 const picture = document.createElement('img');
-                picture.src = pictureFile.url;
+                picture.src = pictureFile.file.url;
                 brandElement.appendChild(picture);
             } else {
                 console.warn('No Picture for item:', item);
             }
 
 
-
-            // const logo = document.createElement('img');
-            // logo.src = item.properties.Logo?.files[0]?.url || 'No Logo';
-            // brandElement.appendChild(logo);
-
             const url = document.createElement('a');
             url.href = item.properties.URL?.url || '#';
             url.textContent = "Visit website";
             brandElement.appendChild(url);
 
-            // const picture = document.createElement('img');
-            // picture.src = item.properties.Picture?.files[0]?.url || 'No Picture';
-            // brandElement.appendChild(picture);
 
             brandsElement.appendChild(brandElement);
         }
