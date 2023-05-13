@@ -14,11 +14,12 @@ const fetchNotionData = async () => {
 
     const data = await response.json();
 
-    // 在这里插入console.log(data);
-    console.log(data);
+    // 在这里插入console.log(data.results);
+    console.log(data.results);
 
     return data;
 };
+
 
 
 window.onload = async () => {
