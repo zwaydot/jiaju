@@ -41,7 +41,7 @@ window.onload = async () => {
             const logoFile = item.properties.Logo?.files[0];
             if (logoFile) {
                 const logo = document.createElement('img');
-                logo.src = logoFile.url;
+                logo.src = logoFile.file.url; // 将logoFile.url更改为logoFile.file.url
                 brandElement.appendChild(logo);
             } else {
                 console.warn('No Logo for item:', item);
