@@ -11,8 +11,15 @@ const fetchNotionData = async () => {
     if (!response.ok) {
         throw new Error("Failed to fetch data from Notion API");
     }
-    return await response.json();
+
+    const data = await response.json();
+
+    // 在这里插入console.log(data);
+    console.log(data);
+
+    return data;
 };
+
 
 window.onload = async () => {
     try {
