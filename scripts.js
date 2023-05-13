@@ -38,19 +38,38 @@ window.onload = async () => {
             intro.textContent = item.properties.Introduction?.rich_text[0]?.plain_text || 'No Introduction';
             brandElement.appendChild(intro);
 
+            const logoFile = item.properties.Logo?.files[0];
+            if (logoFile) {
+                const logo = document.createElement('img');
+                logo.src = logoFile.url;
+                brandElement.appendChild(logo);
+            } else {
+                console.warn('No Logo for item:', item);
+            }
+            
+            const pictureFile = item.properties.Picture?.files[0];
+            if (pictureFile) {
+                const picture = document.createElement('img');
+                picture.src = pictureFile.url;
+                brandElement.appendChild(picture);
+            } else {
+                console.warn('No Picture for item:', item);
+            }
 
-            const logo = document.createElement('img');
-            logo.src = item.properties.Logo?.files[0]?.url || 'No Logo';
-            brandElement.appendChild(logo);
+
+
+            // const logo = document.createElement('img');
+            // logo.src = item.properties.Logo?.files[0]?.url || 'No Logo';
+            // brandElement.appendChild(logo);
 
             const url = document.createElement('a');
             url.href = item.properties.URL?.url || '#';
             url.textContent = "Visit website";
             brandElement.appendChild(url);
 
-            const picture = document.createElement('img');
-            picture.src = item.properties.Picture?.files[0]?.url || 'No Picture';
-            brandElement.appendChild(picture);
+            // const picture = document.createElement('img');
+            // picture.src = item.properties.Picture?.files[0]?.url || 'No Picture';
+            // brandElement.appendChild(picture);
 
             brandsElement.appendChild(brandElement);
         }
