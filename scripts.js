@@ -13,57 +13,58 @@ const fetchNotionData = async () => {
     }
 
     const data = await response.json();
-
-    // 在这里插入console.log(data.results);
     console.log(data.results);
-
     return data;
 };
 
+const createBrandElement = (item) => {
+    const brandElement = document.createElement('div');
+    brandElement.classList.add('brand-card');
 
+    const brandName = document.createElement('h2');
+    brandName.textContent = item.properties.Brand?.title[0]?.plain_text || 'Unknown';
+    brandElement.appendChild(brandName);
 
-window.onload = async () => {
-    try {
-        const data = await fetchNotionData();
-        const brandsElement = document.getElementById('brands');
-        for (const item of data.results) {
-            const brandElement = document.createElement('div');
-            brandElement.classList.add('brand-card');
-
-            const brandName = document.createElement('h2');
-            brandName.textContent = item.properties.Brand?.title[0]?.plain_text || 'Unknown';
-            brandElement.appendChild(brandName);
-
-            const intro = document.createElement('p');
-            intro.textContent = item.properties.Introduction?.rich_text[0]?.plain_text || 'No Introduction';
-            brandElement.appendChild(intro);
+    const intro = document.createElement('p');
+    intro.textContent = item.properties.Introduction?.rich_text[0]?.plain_text || 'No Introduction';
+    brandElement.appendChild(intro);
 
             const logoFile = item.properties.Logo?.files[0];
-            if (logoFile && logoFile.file) {
+            if (logoFile) {
                 const logo = document.createElement('img');
-                logo.src = logoFile.file.url; 
+                logo.src = logoFile.file.url; // 将logoFile.url更改为logoFile.file.url
                 brandElement.appendChild(logo);
             } else {
                 console.warn('No Logo for item:', item);
             }
-
+            
             const pictureFile = item.properties.Picture?.files[0];
-            if (pictureFile && pictureFile.file) {
+            if (pictureFile) {
                 const picture = document.createElement('img');
-                picture.src = pictureFile.file.url;
+                picture.src = pictureFile.url;
                 brandElement.appendChild(picture);
             } else {
                 console.warn('No Picture for item:', item);
             }
 
 
+
+            // const logo = document.createElement('img');
+            // logo.src = item.properties.Logo?.files[0]?.url || 'No Logo';
+            // brandElement.appendChild(logo);
+
             const url = document.createElement('a');
             url.href = item.properties.URL?.url || '#';
             url.textContent = "Visit website";
             brandElement.appendChild(url);
 
+            // const picture = document.createElement('img');
+            // picture.src = item.properties.Picture?.files[0]?.url || 'No Picture';
+            // brandElement.appendChild(picture);
 
-            brandsElement.appendChild(brandElement);
+        const brandsElement = document.getElementById('brands');
+        for (const group in groups) {
+            brandsElement.appendChild(groups[group]);
         }
     } catch (error) {
         console.error("Failed to fetch brand data:", error);
