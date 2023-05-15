@@ -1,4 +1,4 @@
-const NOTION_API = "https://crimson-shape-242d.zwaydot4972.workers.dev/v1/databases/3f12ac93b77c4250b1bddd5add895293/query";
+const NOTION_API = https://crimson-shape-242d.zwaydot4972.workers.dev/v1/databases/3f12ac93b77c4250b1bddd5add895293/query;
 
 const fetchNotionData = async () => {
     const response = await fetch(NOTION_API, {
