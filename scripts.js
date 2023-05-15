@@ -62,6 +62,8 @@ window.onload = async () => {
 
         for (const item of data.results) {
             const groupTitle = item.properties.Group?.select?.name;
+            console.log('Group Title:', groupTitle);
+
 
             if (!groups[groupTitle]) {
                 groups[groupTitle] = document.createElement('div');
