@@ -20,12 +20,13 @@ const fetchNotionData = async () => {
     return data;
 };
 
-
-
 window.onload = async () => {
     try {
         const data = await fetchNotionData();
-        const brandsElement = document.getElementById('brands');
+        const brandsContainer = document.getElementById('brands-container');
+
+        const groupElements = {}; // 存储不同分组的元素
+
         for (const item of data.results) {
             const brandElement = document.createElement('div');
             brandElement.classList.add('brand-card');
@@ -56,23 +57,32 @@ window.onload = async () => {
                 console.warn('No Picture for item:', item);
             }
 
-
-
-
-            // const logo = document.createElement('img');
-            // logo.src = item.properties.Logo?.files[0]?.url || 'No Logo';
-            // brandElement.appendChild(logo);
-
             const url = document.createElement('a');
             url.href = item.properties.URL?.url || '#';
             url.textContent = "Visit website";
             brandElement.appendChild(url);
 
-            // const picture = document.createElement('img');
-            // picture.src = item.properties.Picture?.files[0]?.url || 'No Picture';
-            // brandElement.appendChild(picture);
+            const brandGroup = item.properties.Group?.select?.name;
+            if (brandGroup) {
+                if (!groupElements[brandGroup]) { // 如果这个分组的元素还没有创建
+                    // 创建一个新的元素来展示这个分组
+                    const groupElement = document.createElement('div');
+                    groupElement.id = brandGroup;
+                    groupElement.classList.add('brand-group');
 
-            brandsElement.appendChild(brandElement);
+                    const groupTitle = document.createElement('h1');
+                    groupTitle.textContent = brandGroup;
+                    groupElement.appendChild(groupTitle);
+
+                    groupElements[brandGroup] = groupElement;
+                    brandsContainer.appendChild(groupElement);
+                }
+
+                // 将品牌添加到对应的分组中
+                groupElements[brandGroup].appendChild(brandElement);
+            } else {
+                console.warn('No Group for item:', item);
+            }
         }
     } catch (error) {
         console.error("Failed to fetch brand data:", error);
