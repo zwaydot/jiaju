@@ -1,4 +1,4 @@
-const NOTION_API = "https://api.jiaju.design/v1/databases/3f12ac93b77c4250b1bddd5add895293/query";
+const NOTION_API = "https://crimson-shape-242d.zwaydot4972.workers.dev/v1/databases/3f12ac93b77c4250b1bddd5add895293/query";
 
 const fetchNotionData = async () => {
     const response = await fetch(NOTION_API, {
@@ -53,17 +53,16 @@ const createBrandElement = (item) => {
     brandElement.appendChild(url);
 
     return brandElement;
-};
+}
 
 window.onload = async () => {
     try {
         const data = await fetchNotionData();
+        const brandsElement = document.getElementById('brands');
         const groups = {};
 
         for (const item of data.results) {
             const groupTitle = item.properties.Group?.select?.name;
-            console.log('Group Title:', groupTitle);
-
 
             if (!groups[groupTitle]) {
                 groups[groupTitle] = document.createElement('div');
@@ -78,9 +77,8 @@ window.onload = async () => {
             groups[groupTitle].appendChild(brandElement);
         }
 
-        const brandsElement = document.getElementById('brands');
-        for (const group in groups) {
-            brandsElement.appendChild(groups[group]);
+        for (const groupTitle in groups) {
+            brandsElement.appendChild(groups[groupTitle]);
         }
     } catch (error) {
         console.error("Failed to fetch brand data:", error);
