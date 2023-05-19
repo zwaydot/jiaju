@@ -7,7 +7,8 @@ body {
 
 header {
     color: #333;
-    padding: 10px 0 5px 30px;
+    padding: 10px 2% 5px ;
+
     text-align: left;
     position: fixed;
     background-color: #f4f4f4;
@@ -18,10 +19,21 @@ header {
 main {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
-    padding-top: 100px;  
+    justify-content: flex-start;
+    padding: 100px 4% 80px;
+    align-items: flex-start;
 }
+
+.group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.group h2 {
+    flex-basis: 100%;
+}
+
 
 .brand-card {
     background-color: #fff;
@@ -41,7 +53,7 @@ footer {
     background-color: #f4f4f4;
     color: #666;
     text-align: left;
-    padding: 0px 0 0 30px;
+    padding: 0 2% 0;
     position: fixed;
     bottom: 0;
     width: 100%;
