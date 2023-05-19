@@ -5,7 +5,11 @@ const fetchNotionData = async () => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+            start_cursor: startCursor,
+            page_size: 5 
+        })
     });
 
     if (!response.ok) {
