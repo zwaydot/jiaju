@@ -61,6 +61,11 @@ window.onload = async () => {
         const brandsElement = document.getElementById('brands');
         const groups = {};
 
+        const groupsOrder = ["国外品牌", "国内品牌", "设计工匠", "资料百科"];
+        data.results.sort((a, b) => {
+            return groupsOrder.indexOf(a.properties.Group?.select?.name) - groupsOrder.indexOf(b.properties.Group?.select?.name);
+        });
+
         for (const item of data.results) {
             const groupTitle = item.properties.Group?.select?.name;
 
