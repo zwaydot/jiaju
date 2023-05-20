@@ -57,9 +57,16 @@ const createBrandElement = (item) => {
 
 window.onload = async () => {
     try {
+        const loadingElement = document.getElementById('loading');
+        loadingElement.style.display = 'block';
         const data = await fetchNotionData();
         const brandsElement = document.getElementById('brands');
         const groups = {};
+
+        const groupsOrder = ["国外品牌", "国内品牌", "设计工匠", "资料百科"];
+        data.results.sort((a, b) => {
+            return groupsOrder.indexOf(a.properties.Group?.select?.name) - groupsOrder.indexOf(b.properties.Group?.select?.name);
+        });
 
         for (const item of data.results) {
             const groupTitle = item.properties.Group?.select?.name;
@@ -80,7 +87,9 @@ window.onload = async () => {
         for (const groupTitle in groups) {
             brandsElement.appendChild(groups[groupTitle]);
         }
+        loadingElement.style.display = 'none';
     } catch (error) {
+        loadingElement.style.display = 'none';
         console.error("Failed to fetch brand data:", error);
     }
 };
