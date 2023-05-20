@@ -1,15 +1,11 @@
-const NOTION_API = "https://api.jiaju.design/v1/databases/3f12ac93b77c4250b1bddd5add895293/query";
+const NOTION_API = "https://jiaju.zwaydot4972.workers.dev/v1/databases/3f12ac93b77c4250b1bddd5add895293/query";
 
 const fetchNotionData = async () => {
     const response = await fetch(NOTION_API, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            start_cursor: startCursor,
-            page_size: 5 
-        })
+        }
     });
 
     if (!response.ok) {
@@ -64,11 +60,6 @@ window.onload = async () => {
         const data = await fetchNotionData();
         const brandsElement = document.getElementById('brands');
         const groups = {};
-
-        const groupsOrder = ["国外品牌", "国内品牌", "设计工匠", "资料百科"];
-        data.results.sort((a, b) => {
-            return groupsOrder.indexOf(a.properties.Group?.select?.name) - groupsOrder.indexOf(b.properties.Group?.select?.name);
-        });
 
         for (const item of data.results) {
             const groupTitle = item.properties.Group?.select?.name;
