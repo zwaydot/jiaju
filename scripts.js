@@ -21,39 +21,48 @@ const createBrandElement = (item) => {
     const brandElement = document.createElement('div');
     brandElement.classList.add('brand-card');
 
+    const brandLogo = document.createElement('img');
+    brandLogo.src = item.properties.Logo?.files[0]?.file?.url || '';
+    brandLogo.width = 54;
+    brandLogo.height = 54;
+    brandLogo.alt = item.properties.Brand?.title[0]?.plain_text || 'Unknown';
+    brandLogo.classList.add('brand-logo');
+    brandElement.appendChild(brandLogo);
+
+    const brandDetails = document.createElement('div');
+    brandDetails.classList.add('brand-details');
+
     const brandName = document.createElement('h2');
     brandName.textContent = item.properties.Brand?.title[0]?.plain_text || 'Unknown';
-    brandElement.appendChild(brandName);
+    brandName.classList.add('brand-name');
+    brandDetails.appendChild(brandName);
 
     const intro = document.createElement('p');
     intro.textContent = item.properties.Introduction?.rich_text[0]?.plain_text || 'No Introduction';
-    brandElement.appendChild(intro);
+    intro.classList.add('brand-intro');
+    brandDetails.appendChild(intro);
 
-    const logoFile = item.properties.Logo?.files[0];
-    if (logoFile && logoFile.file) {
-        const logo = document.createElement('img');
-        logo.src = logoFile.file.url; 
-        brandElement.appendChild(logo);
+    brandElement.appendChild(brandDetails);
+
+    const groupTitle = item.properties.Group?.select?.name;
+
+    if (groupTitle === '🌍 国外品牌') {
+        brandElement.style.backgroundColor = '#F4F1E6';
+    } else if (groupTitle === '🇨🇳 国内品牌') {
+        brandElement.style.backgroundColor = '#F0F9FE';
+    } else if (groupTitle === '🪓 设计工匠') {
+        brandElement.style.backgroundColor = '#F8F0F1';
+    } else if (groupTitle === '📖 资料百科') {
+        brandElement.style.backgroundColor = '#F0F8F2';
     } else {
-        console.warn('No Logo for item:', item);
+        brandElement.style.backgroundColor = '#ccc';
     }
 
-    const pictureFile = item.properties.Picture?.files[0];
-    if (pictureFile && pictureFile.file) {
-        const picture = document.createElement('img');
-        picture.src = pictureFile.file.url;
-        brandElement.appendChild(picture);
-    } else {
-        console.warn('No Picture for item:', item);
-    }
-
-    const url = document.createElement('a');
-    url.href = item.properties.URL?.url || '#';
-    url.textContent = "Visit website";
-    brandElement.appendChild(url);
+    brandElement.onclick = () => window.open(item.properties.URL?.url || '#', '_blank');
 
     return brandElement;
-}
+};
+
 
 window.onload = async () => {
     try {
@@ -63,7 +72,7 @@ window.onload = async () => {
         const brandsElement = document.getElementById('brands');
         const groups = {};
 
-        const groupsOrder = ["国外品牌", "国内品牌", "设计工匠", "资料百科"];
+        const groupsOrder = ["🌍 国外品牌", "🇨🇳 国内品牌", "🪓 设计工匠", "📖 资料百科"];
         data.results.sort((a, b) => {
             return groupsOrder.indexOf(a.properties.Group?.select?.name) - groupsOrder.indexOf(b.properties.Group?.select?.name);
         });
