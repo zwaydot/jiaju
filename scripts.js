@@ -32,7 +32,7 @@ const createBrandElement = (item) => {
     const brandDetails = document.createElement('div');
     brandDetails.classList.add('brand-details');
 
-    const brandName = document.createElement('h2');
+    const brandName = document.createElement('h3');
     brandName.textContent = item.properties.Brand?.title[0]?.plain_text || 'Unknown';
     brandName.classList.add('brand-name');
     brandDetails.appendChild(brandName);
