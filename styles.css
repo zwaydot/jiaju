@@ -70,6 +70,17 @@ main {
 
 }
 
+@keyframes slideIn {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
 .brand-card {
     display: flex;
     align-items: center;
@@ -78,6 +89,9 @@ main {
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s;
+    animation-name: slideIn;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
 }
 
 .brand-card:hover {
@@ -99,15 +113,15 @@ main {
 }
 
 .brand-name {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #111111;
-    margin: 0;
+    margin: 0 0 4px 0;
 }
 
 .brand-intro {
     font-size: 12px;
-    color: #666666;
+    color: #888;
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -142,10 +156,10 @@ main {
     }
 
     .brand-name {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         color: #111111;
-        margin: 0;
+        margin: 0 0 4px 0;
     }
 
     .brand-intro {
