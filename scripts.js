@@ -45,7 +45,6 @@ const createBrandElement = (item) => {
     brandElement.appendChild(brandDetails);
 
     const groupTitle = item.properties.Group?.select?.name;
-
     if (groupTitle === '🌍 国外品牌') {
         brandElement.style.backgroundColor = '#F4F1E6';
     } else if (groupTitle === '🇨🇳 国内品牌') {
@@ -59,10 +58,8 @@ const createBrandElement = (item) => {
     }
 
     brandElement.onclick = () => window.open(item.properties.URL?.url || '#', '_blank');
-
     return brandElement;
 };
-
 
 window.onload = async () => {
     try {
@@ -97,6 +94,7 @@ window.onload = async () => {
             brandsElement.appendChild(groups[groupTitle]);
         }
         loadingElement.style.display = 'none';
+        document.querySelector('footer').style.display = 'block';
     } catch (error) {
         loadingElement.style.display = 'none';
         console.error("Failed to fetch brand data:", error);

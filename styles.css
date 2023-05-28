@@ -47,7 +47,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding: 80px 5% 80px;
+    padding: 80px 5% 30px;
     align-items: flex-start;
 }
 
@@ -176,9 +176,8 @@ main {
 }
 
 footer {
-    background-color: #f8f8f8;
+    display: none;
     padding: 0 5%;
-    position: fixed;
     bottom: 0;
     height: 36px;
     width: 100%;
@@ -188,5 +187,5 @@ footer p {
     font-size: 14px;
     color: #888;
     text-align: left;
-    margin: 10px 0 0 0;
+    margin: 10px 0 10px 0;
 }
