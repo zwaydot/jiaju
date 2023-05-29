@@ -45,13 +45,13 @@ const createBrandElement = (item) => {
     brandElement.appendChild(brandDetails);
 
     const groupTitle = item.properties.Group?.select?.name;
-    if (groupTitle === '🌍 国外品牌') {
+    if (groupTitle === '国外品牌') {
         brandElement.style.backgroundColor = '#F4F1E6';
-    } else if (groupTitle === '🇨🇳 国内品牌') {
+    } else if (groupTitle === '国内品牌') {
         brandElement.style.backgroundColor = '#F0F9FE';
-    } else if (groupTitle === '🪓 设计工匠') {
+    } else if (groupTitle === '设计工匠') {
         brandElement.style.backgroundColor = '#F8F0F1';
-    } else if (groupTitle === '📖 资料百科') {
+    } else if (groupTitle === '资料百科') {
         brandElement.style.backgroundColor = '#F0F8F2';
     } else {
         brandElement.style.backgroundColor = '#ccc';
@@ -61,7 +61,38 @@ const createBrandElement = (item) => {
     return brandElement;
 };
 
+const createGroupElement = (groupTitle) => {
+    const groupElement = document.createElement('div');
+    groupElement.classList.add('group');
+    groupElement.id = groupTitle; // 这里设置id
+    const groupTitleElement = document.createElement('h2');
+    groupTitleElement.textContent = groupTitle;
+    groupElement.appendChild(groupTitleElement);
+    return groupElement;
+};
+
+const navbar = document.querySelector('.navbar');
+
+const scrollToElement = (elementId) => {
+  const element = document.getElementById(elementId);
+  if (!element) {
+    console.error(`Element with ID ${elementId} not found.`);
+    return;
+  }
+  const yOffset = -navbar.getBoundingClientRect().height; 
+  const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+  window.scrollTo({top: y, behavior: 'smooth'});
+};
+
 window.onload = async () => {
+    const tabs = document.querySelectorAll('.tabs button');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        scrollToElement(tab.textContent);
+      });
+    });
+
     try {
         const loadingElement = document.getElementById('loading');
         loadingElement.style.display = 'block';
@@ -69,7 +100,7 @@ window.onload = async () => {
         const brandsElement = document.getElementById('brands');
         const groups = {};
 
-        const groupsOrder = ["🌍 国外品牌", "🇨🇳 国内品牌", "🪓 设计工匠", "📖 资料百科"];
+        const groupsOrder = ["国外品牌", "国内品牌", "设计工匠", "资料百科"];
         data.results.sort((a, b) => {
             return groupsOrder.indexOf(a.properties.Group?.select?.name) - groupsOrder.indexOf(b.properties.Group?.select?.name);
         });
@@ -78,14 +109,8 @@ window.onload = async () => {
             const groupTitle = item.properties.Group?.select?.name;
 
             if (!groups[groupTitle]) {
-                groups[groupTitle] = document.createElement('div');
-                groups[groupTitle].classList.add('group');
-
-                const groupTitleElement = document.createElement('h2');
-                groupTitleElement.textContent = groupTitle;
-                groups[groupTitle].appendChild(groupTitleElement);
+                groups[groupTitle] = createGroupElement(groupTitle);
             }
-
             const brandElement = createBrandElement(item);
             groups[groupTitle].appendChild(brandElement);
         }
@@ -100,3 +125,17 @@ window.onload = async () => {
         console.error("Failed to fetch brand data:", error);
     }
 };
+
+const tabs = document.querySelectorAll('.tabs button');
+
+tabs.forEach((tab) => {
+  tab.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(e.target.textContent);
+    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight;
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    });
+  });
+});

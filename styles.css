@@ -16,7 +16,7 @@ body {
     font-size: 16px;
 }
 
-header {
+.navbar {
     color: #111;
     padding: 0 5%;
     text-align: left;
@@ -26,7 +26,7 @@ header {
     z-index: 999;
 }
 
-header h1 {
+.navbar h1 {
     font-size: 30px;
     margin-bottom: 0;
     color: #111;
@@ -34,7 +34,7 @@ header h1 {
     font-weight: 700;
 }
 
-header h2 {
+.navbar h2 {
     font-size: 14px;
     font-family: 'Noto Serif SC';
     font-weight: 400;
@@ -42,12 +42,24 @@ header h2 {
     margin-top: 5px;
 }
 
+.tabs {
+    padding: 8px 0;
+}
+.grouptag {
+    width: 80px;
+    height: 30px;
+    color: #f1f1f1;
+    background: #7B7C5F;
+    border-radius: 15px;
+    border: none; 
+    outline: none; 
+}
 
 main {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    padding: 80px 5% 30px;
+    padding: 120px 5% 30px;
     align-items: flex-start;
 }
 
@@ -180,7 +192,6 @@ footer {
     padding: 0 5%;
     bottom: 0;
     height: 36px;
-    width: 100%;
 }
 
 footer p {
