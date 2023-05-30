@@ -17,6 +17,7 @@ const fetchNotionData = async () => {
     return data;
 };
 
+// 提取列表数据
 const createBrandElement = (item) => {
     const brandElement = document.createElement('div');
     brandElement.classList.add('brand-card');
@@ -44,6 +45,7 @@ const createBrandElement = (item) => {
 
     brandElement.appendChild(brandDetails);
 
+    // 创建分组并设置分组卡片的背景色
     const groupTitle = item.properties.Group?.select?.name;
     if (groupTitle === '国外品牌') {
         brandElement.style.backgroundColor = '#F4F1E6';
@@ -61,37 +63,67 @@ const createBrandElement = (item) => {
     return brandElement;
 };
 
+// ？
 const createGroupElement = (groupTitle) => {
     const groupElement = document.createElement('div');
     groupElement.classList.add('group');
-    groupElement.id = groupTitle; // 这里设置id
+    groupElement.id = groupTitle; 
     const groupTitleElement = document.createElement('h2');
     groupTitleElement.textContent = groupTitle;
     groupElement.appendChild(groupTitleElement);
     return groupElement;
 };
 
+// 创建导航、锚点标签变量，为后面计算高度做准备
 const navbar = document.querySelector('.navbar');
+const tabsElement = document.querySelector('.tabs');
+
+// This will store the original top offset of tabsElement
+let originalTopOffset;
+
+function adjustTabsPosition() {
+    // 更新 navbarHeight的值
+    const navbarHeight = navbar.getBoundingClientRect().height;
+    
+    if (window.scrollY >= originalTopOffset - navbarHeight) {
+        tabsElement.style.position = 'fixed';
+        tabsElement.style.top = navbarHeight + 'px';
+        tabsElement.style.width = '100%';
+        tabsElement.style.zIndex = '1000';
+    } else {
+        tabsElement.style.position = 'static';
+    }
+}
+
 
 const scrollToElement = (elementId) => {
-  const element = document.getElementById(elementId);
-  if (!element) {
-    console.error(`Element with ID ${elementId} not found.`);
-    return;
-  }
-  const yOffset = -navbar.getBoundingClientRect().height; 
-  const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    const element = document.getElementById(elementId);
+    if (!element) {
+        console.error(`Element with ID ${elementId} not found.`);
+        return;
+    }
+    const yOffset = -navbar.getBoundingClientRect().height - 20;
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
-  window.scrollTo({top: y, behavior: 'smooth'});
+    window.scrollTo({ top: y, behavior: 'smooth' });
 };
 
 window.onload = async () => {
-    const tabs = document.querySelectorAll('.tabs button');
+    const navbarHeight = navbar.getBoundingClientRect().height;
+
+    const tabs = tabsElement.querySelectorAll('button');
     tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        scrollToElement(tab.textContent);
-      });
+        tab.addEventListener('click', () => {
+            scrollToElement(tab.textContent);
+        });
     });
+
+    // 延迟 originalTopOffset 的计算，直到页面加载完成并且所有元素的位置都已确定
+    setTimeout(() => {
+        originalTopOffset = tabsElement.getBoundingClientRect().top + window.scrollY;
+        adjustTabsPosition();
+    }, 500);
+    window.addEventListener('scroll', adjustTabsPosition);
 
     try {
         const loadingElement = document.getElementById('loading');
@@ -120,22 +152,9 @@ window.onload = async () => {
         }
         loadingElement.style.display = 'none';
         document.querySelector('footer').style.display = 'block';
+        tabsElement.style.display = 'block';
     } catch (error) {
         loadingElement.style.display = 'none';
         console.error("Failed to fetch brand data:", error);
     }
 };
-
-const tabs = document.querySelectorAll('.tabs button');
-
-tabs.forEach((tab) => {
-  tab.addEventListener('click', (e) => {
-    e.preventDefault();
-    const targetElement = document.getElementById(e.target.textContent);
-    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight;
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
-    });
-  });
-});
