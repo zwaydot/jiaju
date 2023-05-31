@@ -49,6 +49,7 @@ body {
     padding: 8px 0;
     background-color: #fff;
 }
+
 .grouptag {
     width: 80px;
     height: 30px;
@@ -57,6 +58,11 @@ body {
     border-radius: 15px;
     border: none; 
     outline: none; 
+}
+
+.grouptag.active {
+    /* 这里是选中状态下的样式 */
+    background-color: red;
 }
 
 main {
@@ -145,7 +151,6 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 
 @media screen and (min-width: 768px) {
     .brand-card {
