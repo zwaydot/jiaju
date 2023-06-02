@@ -124,10 +124,19 @@ window.onload = async () => {
     const tabs = tabsElement.querySelectorAll('button');
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
+            // 当点击某个tab时，先把所有tab的"selected"类移除
+            tabs.forEach((tab) => {
+                tab.classList.remove('selected');
+            });
+            // 再把被点击的tab的"selected"类添加上
+            tab.classList.add('selected');
             scrollToElement(tab.textContent);
         });
     });
-
+    // 默认选中第一个tab
+    if(tabs.length > 0) {
+        tabs[0].classList.add('selected');
+    }
     // 页面加载完成后，计算 originalTopOffset 值并调整 tabsElement 位置
     setTimeout(() => {
         originalTopOffset = tabsElement.getBoundingClientRect().top + window.scrollY;
