@@ -120,16 +120,12 @@ const scrollToElement = (elementId) => {
 
 // 当页面完全加载后执行的函数
 window.onload = async () => {
+    // 添加一个点击状态变量
+    let scrollTriggeredByClick = false;  
     // 获取所有的标签元素，为每个标签元素添加点击事件监听器
     const tabs = tabsElement.querySelectorAll('button');
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // 当点击某个tab时，先把所有tab的"selected"类移除
-            tabs.forEach((tab) => {
-                tab.classList.remove('selected');
-            });
-            // 再把被点击的tab的"selected"类添加上
-            tab.classList.add('selected');
             scrollToElement(tab.textContent);
         });
     });
@@ -144,7 +140,27 @@ window.onload = async () => {
     }, 500);
 
     // 添加滚动事件监听器
-    window.addEventListener('scroll', adjustTabsPosition);
+    window.addEventListener('scroll', () => {
+        // 调整标签元素的位置
+        adjustTabsPosition();
+
+        // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
+        for (const tab of tabs) {
+            const groupElement = document.getElementById(tab.textContent);
+            if (groupElement) {
+                const groupRect = groupElement.getBoundingClientRect();
+                const tabsRect = tabsElement.getBoundingClientRect();
+                if (groupRect.top <= tabsRect.bottom) {
+                    // 移除所有标签元素的选中状态
+                    for (const otherTab of tabs) {
+                        otherTab.classList.remove('selected');
+                    }
+                    // 设置当前标签元素为选中状态
+                    tab.classList.add('selected');
+                }
+            }
+        }
+    });
 
     // 以下部分处理 Notion 数据的获取和处理
     try {
