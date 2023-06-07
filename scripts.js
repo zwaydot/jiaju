@@ -55,19 +55,19 @@ const createBrandElement = (item) => {
     // 添加品牌详细信息到品牌元素
     brandElement.appendChild(brandDetails);
 
-    // 根据品牌所属分组的不同，设置品牌卡片的背景色
-    const groupTitle = item.properties.Group?.select?.name;
-    if (groupTitle === '国外品牌') {
-        brandElement.style.backgroundColor = '#F4F1E6';
-    } else if (groupTitle === '国内品牌') {
-        brandElement.style.backgroundColor = '#F0F9FE';
-    } else if (groupTitle === '设计工匠') {
-        brandElement.style.backgroundColor = '#F8F0F1';
-    } else if (groupTitle === '资料百科') {
-        brandElement.style.backgroundColor = '#F0F8F2';
-    } else {
-        brandElement.style.backgroundColor = '#ccc';
-    }
+    // // 根据品牌所属分组的不同，设置品牌卡片的背景色
+    // const groupTitle = item.properties.Group?.select?.name;
+    // if (groupTitle === '国外品牌') {
+    //     brandElement.style.backgroundColor = '#F4F1E6';
+    // } else if (groupTitle === '国内品牌') {
+    //     brandElement.style.backgroundColor = '#F0F9FE';
+    // } else if (groupTitle === '设计工匠') {
+    //     brandElement.style.backgroundColor = '#F8F0F1';
+    // } else if (groupTitle === '资料百科') {
+    //     brandElement.style.backgroundColor = '#F0F8F2';
+    // } else {
+    //     brandElement.style.backgroundColor = '#ccc';
+    // }
 
     // 点击品牌元素时，打开品牌链接
     brandElement.onclick = () => window.open(item.properties.URL?.url || '#', '_blank');
