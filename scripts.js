@@ -120,6 +120,22 @@ const scrollToElement = (elementId) => {
 
 // 当页面完全加载后执行的函数
 window.onload = async () => {
+    // 为SVG元素添加active类
+    var svg = document.querySelector('#loading svg');
+    svg.classList.add('active');
+    // 设置SVG动画最短播放时长
+    window.addEventListener('load', function() {
+        var paths = document.querySelectorAll('.svg-elem path');
+        paths.forEach(function(path) {
+            path.classList.add('min-duration');
+        });
+        setTimeout(function() {
+            paths.forEach(function(path) {
+                path.classList.remove('min-duration');
+            });
+        }, 1500);  // 这里的2000是2秒，你可以根据需要修改这个值
+    });    
+
     // 添加一个点击状态变量
     let scrollTriggeredByClick = false;  
     // 获取所有的标签元素，为每个标签元素添加点击事件监听器
