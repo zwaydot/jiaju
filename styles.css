@@ -21,21 +21,8 @@ body {
     padding-top: 360px;
 }
 
-@-webkit-keyframes animate-svg-stroke{
-    0%{stroke-dashoffset:200;stroke-dasharray:200;}
-    100%{stroke-dashoffset:0;stroke-dasharray:200;}
-}
-@keyframes animate-svg-stroke{
-    0%{stroke-dashoffset:200;stroke-dasharray:200;}
-    100%{stroke-dashoffset:0;stroke-dasharray:200;}
-}
-.svg-elem path {
-    -webkit-animation:animate-svg-stroke 1.5s cubic-bezier(0.47,0,0.745,0.715) 0s both infinite;
-    animation:animate-svg-stroke 1.5s cubic-bezier(0.47,0,0.745,0.715) 0s both infinite;
-}
-.min-duration {
-    -webkit-animation: animate-svg-stroke 1.6s cubic-bezier(0.47, 0, 0.745, 0.715) 0s both;
-    animation: animate-svg-stroke 1.6s cubic-bezier(0.47, 0, 0.745, 0.715) 0s both;
+.lottie {
+    display:inline-block;
 }
 
  .navbar {
