@@ -26,6 +26,7 @@ body {
 }
 
  .navbar {
+    height: 90px;
     width: 100%;
     position: fixed;
     z-index: 999;
@@ -39,6 +40,7 @@ body {
 }
 
 .web-title {
+    height: 90px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,6 +64,7 @@ body {
     margin-top: 5px;
 }
 
+/* 汉堡菜单 */
 .menu-icon {
     cursor: pointer;
     width: 28px;
@@ -112,7 +115,32 @@ body {
     transform: rotate(-135deg);
 }
 
+/* 弹出浮层 */
+.menu {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    margin-top: 90px;
+    background-color:#f6f6f6d1; /* Semi-transparent white */
+    backdrop-filter: blur(10px); /* Creates the frosted glass effect */
+    transition: opacity 1s ease-in-out; /* Add transition to opacity */
+    font-size: 14px;
+    font-family: 'Noto Serif SC';
+    font-weight: 400;
+    color: #333;
+    text-align: center;
+    padding-top: 300px;
+    line-height: 2em;
+    z-index: 9999;
+}
 
+.menu.active {
+    display: block;
+    opacity: 1; /* Fully visible */
+}
+
+/* 锚点导航 */
 .tabs {
     padding: 8px 5%;
     background-color: #f6f6f6;
