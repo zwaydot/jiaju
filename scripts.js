@@ -201,4 +201,20 @@ window.onload = async () => {
         loadingElement.style.display = 'none';
         console.error("Failed to fetch brand data:", error);
     }
+    
+    // 以下是关于菜单交互的代码
+    let menuIcon = document.querySelector('.menu-icon');
+    let menuOverlay = document.querySelector('.menu');
+
+    menuIcon.addEventListener('click', function () {
+        if(menuOverlay.style.display === 'block'){
+            menuOverlay.style.display = 'none';
+            this.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        } else {
+            menuOverlay.style.display = 'block';
+            this.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+    });
 };
