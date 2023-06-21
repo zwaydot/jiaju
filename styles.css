@@ -26,13 +26,24 @@ body {
 }
 
  .navbar {
-    color: #111;
-    padding: 0 5%;
-    text-align: left;
-    position: fixed;
-    background-color: #f6f6f6;
     width: 100%;
+    position: fixed;
     z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    color: #111;    
+    background-color: #f6f6f6;
+    
+}
+
+.web-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 5%;
+
 }
 
 .navbar h1 {
@@ -50,6 +61,57 @@ body {
     color: #888;
     margin-top: 5px;
 }
+
+.menu-icon {
+    cursor: pointer;
+    width: 28px;
+    height: 22px;
+    padding-right: 5%;
+    position: relative;
+    margin: 10px 0;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+}
+
+.menu-icon span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 28px;
+    background: #333;
+    border-radius: 2px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+.menu-icon span:nth-child(1) {
+    top: 0px;
+}
+
+.menu-icon span:nth-child(2) {
+    top: 9px;
+}
+
+.menu-icon span:nth-child(3) {
+    top: 18px;
+}
+
+.menu-icon.open span:nth-child(1) {
+    top: 9px;
+    transform: rotate(135deg);
+}
+
+.menu-icon.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-icon.open span:nth-child(3) {
+    top: 9px;
+    transform: rotate(-135deg);
+}
+
 
 .tabs {
     padding: 8px 5%;
