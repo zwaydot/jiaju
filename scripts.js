@@ -195,6 +195,7 @@ window.onload = async () => {
 
         // 显示底部信息和标签元素
         document.querySelector('footer').style.display = 'block';
+        document.getElementById('sib-form-container').style.display = 'block';
         tabsElement.style.display = 'block';
     } catch (error) {
         // 如果在获取或处理数据时发生错误，隐藏加载动画并打印错误信息

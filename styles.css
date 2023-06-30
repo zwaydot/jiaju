@@ -293,6 +293,18 @@ main {
     }
 }
 
+/* 输入框组件的代码 */
+#sib-form-container {
+    display: none;
+  }
+  
+.input--hidden {
+    display: none;
+  }
+
+/* 输入框组件的代码 */
+
+
 footer {
     display: none;
     padding: 0 5%;
