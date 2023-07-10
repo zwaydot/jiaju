@@ -293,28 +293,53 @@ main {
     }
 }
 
-/* 输入框组件的代码 */
-#sib-form-container {
+.subscribe {
     display: none;
-  }
-  
-.input--hidden {
-    display: none;
-  }
+    justify-content: center;
+    align-items: center;
+    padding: 0 5%;
+}
+.subscribe-content {
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: #111;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+}
 
-/* 输入框组件的代码 */
+.subscribe-button {
+    background-color: #7B7C5F;
+    color: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px 15px;
+}
 
+.socialmedia {
+    display: inline-flex;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    padding: 0 10px;
+}
 
 footer {
     display: none;
+    justify-content: center;
     padding: 0 5%;
-    bottom: 0;
-    height: 36px;
+    padding-bottom: 40px;
+    height: 40px;
 }
 
 footer p {
     font-size: 14px;
     color: #888;
     text-align: left;
-    margin: 10px 0 10px 0;
+    margin: 20px 0;
 }
