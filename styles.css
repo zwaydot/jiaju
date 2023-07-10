@@ -306,7 +306,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 30px;
+    height: 32px;
     width: 100%;
     max-width: 400px;
     padding: 10px 15px;
@@ -317,16 +317,20 @@ main {
     color: #f1f1f1;
     border-radius: 5px;
     padding: 5px 15px;
+    text-decoration: none;
 }
 
 .socialmedia {
     display: inline-flex;
     padding: 0;
     list-style: none;
+    /* border-right:1px solid #ddd; */
 }
 
 li {
-    padding: 0 10px;
+    padding: 0 15px 0 0;
+    width: 32px;
+    height: 32px;
 }
 
 footer {
