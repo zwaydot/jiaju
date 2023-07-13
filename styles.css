@@ -36,7 +36,8 @@ body {
     align-items: center;
     text-align: left;
     color: #111;    
-    background-color: #f6f6f6;
+    background-color: #f6f6f600;
+    backdrop-filter: blur(20px);
     
 }
 
