@@ -140,27 +140,43 @@ window.onload = async () => {
     }, 500);
 
     // 添加滚动事件监听器
-    window.addEventListener('scroll', () => {
-        // 调整标签元素的位置
-        adjustTabsPosition();
+window.addEventListener('scroll', () => {
+    // 调整标签元素的位置
+    adjustTabsPosition();
 
-        // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
-        for (const tab of tabs) {
-            const groupElement = document.getElementById(tab.textContent);
-            if (groupElement) {
-                const groupRect = groupElement.getBoundingClientRect();
-                const tabsRect = tabsElement.getBoundingClientRect();
-                if (groupRect.top <= tabsRect.bottom) {
-                    // 移除所有标签元素的选中状态
-                    for (const otherTab of tabs) {
-                        otherTab.classList.remove('selected');
-                    }
-                    // 设置当前标签元素为选中状态
-                    tab.classList.add('selected');
+    // 调整navbar和tabs的背景透明度
+    let scrollY = window.scrollY;
+    if(scrollY <= 200){
+        let opacity = scrollY / 200 * 0.5;
+        let hexOpacity = Math.floor(opacity * 255).toString(16);
+        if(hexOpacity.length < 2){
+            hexOpacity = '0' + hexOpacity;
+        }
+        document.querySelector('.navbar').style.backgroundColor = `#f6f6f6${hexOpacity}`;
+        document.querySelector('.tabs').style.backgroundColor = `#f6f6f6${hexOpacity}`;
+    } else {
+        document.querySelector('.navbar').style.backgroundColor = '#f6f6f6dd';
+        document.querySelector('.tabs').style.backgroundColor = '#f6f6f6dd';
+    }
+
+    // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
+    for (const tab of tabs) {
+        const groupElement = document.getElementById(tab.textContent);
+        if (groupElement) {
+            const groupRect = groupElement.getBoundingClientRect();
+            const tabsRect = tabsElement.getBoundingClientRect();
+            if (groupRect.top <= tabsRect.bottom) {
+                // 移除所有标签元素的选中状态
+                for (const otherTab of tabs) {
+                    otherTab.classList.remove('selected');
                 }
+                // 设置当前标签元素为选中状态
+                tab.classList.add('selected');
             }
         }
-    });
+    }
+});
+
 
     // 以下部分处理 Notion 数据的获取和处理
     try {
