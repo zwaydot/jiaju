@@ -128,6 +128,10 @@ window.onload = async () => {
             coverImage.style.opacity = '0';
         }
     });
+    // 当过渡效果结束后，隐藏封面图片
+    coverImage.addEventListener('transitionend', function() {
+        this.style.display = 'none';
+    });
 
     // 添加一个点击状态变量
     let scrollTriggeredByClick = false;  
