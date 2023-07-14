@@ -25,7 +25,7 @@ body {
     display:inline-block;
 }
 
- .navbar {
+.navbar {
     height: 90px;
     width: 100%;
     position: fixed;
@@ -38,7 +38,7 @@ body {
     color: #111;    
     background-color: #f6f6f600;
     backdrop-filter: blur(20px);
-    
+    -webkit-backdrop-filter: blur(20px);
 }
 
 .web-title {
@@ -74,7 +74,7 @@ body {
     height: 100%;
     object-fit: cover;
     z-index: -1000;
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 /* 汉堡菜单 */
@@ -159,6 +159,7 @@ body {
     padding: 8px 5%;
     background-color: #f6f6f600;
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 .grouptag {
@@ -167,7 +168,7 @@ body {
     color: #333;
     background: #ffffff00;
     border-radius: 15px;
-    border: 0.5px solid #999;
+    border: 1px solid #bbbbbb;
 }
 
 .selected {
