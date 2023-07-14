@@ -118,17 +118,17 @@ const scrollToElement = (elementId) => {
     window.scrollTo({ top: y, behavior: 'smooth' });
 };
 
-// 视频不能自动播放时显示封面
-window.onload = function() {
-    const video = document.getElementById('myVideo');
-    const coverImage = document.getElementById('cover-image');
-    video.addEventListener('play', function() {
-        coverImage.style.display = 'none';
-    });
-};
-
 // 当页面完全加载后执行的函数
 window.onload = async () => {
+    // 处理视频播放和封面隐藏
+    var video = document.getElementById('myVideo');
+    var coverImage = document.getElementById('cover-image');
+    video.addEventListener('canplay', function() {
+        if (!video.paused) {
+            coverImage.style.opacity = '0';
+        }
+    });
+
     // 添加一个点击状态变量
     let scrollTriggeredByClick = false;  
     // 获取所有的标签元素，为每个标签元素添加点击事件监听器

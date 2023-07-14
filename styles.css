@@ -77,6 +77,19 @@ body {
     opacity: 0.5;
 }
 
+#cover-image {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+    z-index: -999;
+    opacity: 1;
+    transition: opacity 1s ease-out;
+}
+
 /* 汉堡菜单 */
 .menu-icon {
     cursor: pointer;
