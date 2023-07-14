@@ -118,6 +118,15 @@ const scrollToElement = (elementId) => {
     window.scrollTo({ top: y, behavior: 'smooth' });
 };
 
+// 视频不能自动播放时显示封面
+window.onload = function() {
+    const video = document.getElementById('myVideo');
+    const coverImage = document.getElementById('cover-image');
+    video.addEventListener('play', function() {
+        coverImage.style.display = 'none';
+    });
+};
+
 // 当页面完全加载后执行的函数
 window.onload = async () => {
     // 添加一个点击状态变量
