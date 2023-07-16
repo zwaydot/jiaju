@@ -10,7 +10,7 @@ body {
 }
 
 .background {
-    background: linear-gradient(120deg, #e1e6e5, #e9e6e3, #e3e6e9, #eae4e5, #e7e5df);
+    background: linear-gradient(120deg, #e1e6e5, #e9e6e3, #e3e6e9, #eae4e5, #e6e5e2);
     background-size: 200% 200%;
 
     -webkit-animation: BackgroundGradient 4s ease infinite;
@@ -173,9 +173,10 @@ body {
     width: 100%;
     height: 100%;
     margin-top: 90px;
-    background-color:#f6f6f6ee; /* Semi-transparent white */
-    backdrop-filter: blur(10px); /* Creates the frosted glass effect */
-    transition: opacity 1s ease-in-out; /* Add transition to opacity */
+    background-color:#f6f6f6ee; 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    transition: opacity 1s ease-in-out; 
     font-size: 16px;
     font-family: 'Noto Serif SC';
     font-weight: 400;
@@ -244,6 +245,24 @@ main {
 
 }
 
+.brand-card {
+    display: flex;
+    align-items: center;
+    background-color: #fefefe88;
+    width: 100%; 
+    height: 80px;
+    margin: 3px 0;
+    border-radius: 5px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    animation-name: slideIn;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-in-out;
+}
+
 @keyframes slideIn {
     0% {
       transform: translateY(20px);
@@ -254,24 +273,6 @@ main {
       opacity: 1;
     }
   }
-
-.brand-card {
-    display: flex;
-    align-items: center;
-    background-color: #fefefebb;
-    width: 100%; 
-    height: 80px;
-    margin: 3px 0;
-    border-radius: 5px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    animation-name: slideIn;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-in-out;
-}
 
 .brand-logo {
     width: 54px;
@@ -310,6 +311,9 @@ main {
     .brand-card {
         display: flex;
         align-items: center;
+        background-color: #fefefe88;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         width: 350px;
         height: 80px;
         border-radius: 5px;

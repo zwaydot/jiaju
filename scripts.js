@@ -120,19 +120,6 @@ const scrollToElement = (elementId) => {
 
 // 当页面完全加载后执行的函数
 window.onload = async () => {
-    // // 处理视频播放和封面隐藏
-    // var video = document.getElementById('myVideo');
-    // var coverImage = document.getElementById('cover-image');
-    // video.addEventListener('canplay', function() {
-    //     if (!video.paused) {
-    //         coverImage.style.opacity = '0';
-    //     }
-    // });
-    // // 当过渡效果结束后，隐藏封面图片
-    // coverImage.addEventListener('transitionend', function() {
-    //     this.style.display = 'none';
-    // });
-
     // 添加一个点击状态变量
     let scrollTriggeredByClick = false;  
     // 获取所有的标签元素，为每个标签元素添加点击事件监听器
