@@ -120,18 +120,18 @@ const scrollToElement = (elementId) => {
 
 // 当页面完全加载后执行的函数
 window.onload = async () => {
-    // 处理视频播放和封面隐藏
-    var video = document.getElementById('myVideo');
-    var coverImage = document.getElementById('cover-image');
-    video.addEventListener('canplay', function() {
-        if (!video.paused) {
-            coverImage.style.opacity = '0';
-        }
-    });
-    // 当过渡效果结束后，隐藏封面图片
-    coverImage.addEventListener('transitionend', function() {
-        this.style.display = 'none';
-    });
+    // // 处理视频播放和封面隐藏
+    // var video = document.getElementById('myVideo');
+    // var coverImage = document.getElementById('cover-image');
+    // video.addEventListener('canplay', function() {
+    //     if (!video.paused) {
+    //         coverImage.style.opacity = '0';
+    //     }
+    // });
+    // // 当过渡效果结束后，隐藏封面图片
+    // coverImage.addEventListener('transitionend', function() {
+    //     this.style.display = 'none';
+    // });
 
     // 添加一个点击状态变量
     let scrollTriggeredByClick = false;  
@@ -168,8 +168,8 @@ window.addEventListener('scroll', () => {
         document.querySelector('.navbar').style.backgroundColor = `#f6f6f6${hexOpacity}`;
         document.querySelector('.tabs').style.backgroundColor = `#f6f6f6${hexOpacity}`;
     } else {
-        document.querySelector('.navbar').style.backgroundColor = '#f6f6f6dd';
-        document.querySelector('.tabs').style.backgroundColor = '#f6f6f6dd';
+        document.querySelector('.navbar').style.backgroundColor = '#f6f6f6cc';
+        document.querySelector('.tabs').style.backgroundColor = '#f6f6f6cc';
     }
 
     // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
