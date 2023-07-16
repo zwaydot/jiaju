@@ -11,11 +11,11 @@ body {
 
 .background {
     background: linear-gradient(120deg, #e1e6e5, #e9e6e3, #e3e6e9, #e1dddd, #e6e5e2);
-    background-size: 200% 200%;
+    background-size: 200% 800%;
 
-    -webkit-animation: BackgroundGradient 4s ease infinite;
-    -moz-animation: BackgroundGradient 4s ease infinite;
-    animation: BackgroundGradient 4s ease infinite;
+    -webkit-animation: BackgroundGradient 5s ease infinite;
+    -moz-animation: BackgroundGradient 5s ease infinite;
+    animation: BackgroundGradient 5s ease infinite;
 }
 
 @-webkit-keyframes BackgroundGradient {
