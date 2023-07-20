@@ -55,26 +55,12 @@ const createBrandElement = (item) => {
     // 添加品牌详细信息到品牌元素
     brandElement.appendChild(brandDetails);
 
-    // // 根据品牌所属分组的不同，设置品牌卡片的背景色
-    // const groupTitle = item.properties.Group?.select?.name;
-    // if (groupTitle === '国外品牌') {
-    //     brandElement.style.backgroundColor = '#F4F1E6';
-    // } else if (groupTitle === '国内品牌') {
-    //     brandElement.style.backgroundColor = '#F0F9FE';
-    // } else if (groupTitle === '设计工匠') {
-    //     brandElement.style.backgroundColor = '#F8F0F1';
-    // } else if (groupTitle === '资料百科') {
-    //     brandElement.style.backgroundColor = '#F0F8F2';
-    // } else {
-    //     brandElement.style.backgroundColor = '#ccc';
-    // }
-
     // 点击品牌元素时，打开品牌链接
     brandElement.onclick = () => window.open(item.properties.URL?.url || '#', '_blank');
     return brandElement;
 };
 
-// 函数用于创建一个包含组标题的新元素并返回
+// 函数用于创建一个包含组标题的元素并返回
 const createGroupElement = (groupTitle) => {
     const groupElement = document.createElement('div');
     groupElement.classList.add('group');
@@ -83,16 +69,23 @@ const createGroupElement = (groupTitle) => {
     const groupTitleElement = document.createElement('h2');
     groupTitleElement.textContent = groupTitle;
     groupElement.appendChild(groupTitleElement);
+
+    // 创建一个新的 div 元素，用于包含所有的 brand-card 元素
+    const brandsContainerElement = document.createElement('div');
+    brandsContainerElement.classList.add('brands-container');  // 可以在 CSS 中添加 '.brands-container { display: grid; }'
+    groupElement.appendChild(brandsContainerElement);
+
+    // 在 groupElement 对象中存储 brandsContainerElement，以便后面使用
+    groupElement.brandsContainer = brandsContainerElement;
+
     return groupElement;
 };
 
 // 创建导航、锚点标签变量，为后面计算高度做准备
 const navbar = document.querySelector('.navbar');
 const tabsElement = document.querySelector('.tabs');
-
 // 存储 tabsElement 最初的顶部偏移
 let originalTopOffset;
-
 // 函数用于根据滚动位置动态调整 tabsElement 的位置
 function adjustTabsPosition() {
     const navbarHeight = navbar.getBoundingClientRect().height;
@@ -105,7 +98,6 @@ function adjustTabsPosition() {
         tabsElement.style.position = 'static';
     }
 }
-
 // 函数用于平滑滚动至指定元素
 const scrollToElement = (elementId) => {
     const element = document.getElementById(elementId);
@@ -140,43 +132,40 @@ window.onload = async () => {
     }, 500);
 
     // 添加滚动事件监听器
-window.addEventListener('scroll', () => {
-    // 调整标签元素的位置
-    adjustTabsPosition();
-
-    // 调整navbar和tabs的背景透明度
-    let scrollY = window.scrollY;
-    if(scrollY <= 200){
-        let opacity = scrollY / 200 * 0.5;
-        let hexOpacity = Math.floor(opacity * 255).toString(16);
-        if(hexOpacity.length < 2){
-            hexOpacity = '0' + hexOpacity;
+    window.addEventListener('scroll', () => {
+        // 调整标签元素的位置
+        adjustTabsPosition();
+        // 调整navbar和tabs的背景透明度
+        let scrollY = window.scrollY;
+        if(scrollY <= 200){
+            let opacity = scrollY / 200 * 0.5;
+            let hexOpacity = Math.floor(opacity * 255).toString(16);
+            if(hexOpacity.length < 2){
+                hexOpacity = '0' + hexOpacity;
+            }
+            document.querySelector('.navbar').style.backgroundColor = `#f6f6f6${hexOpacity}`;
+            document.querySelector('.tabs').style.backgroundColor = `#f6f6f6${hexOpacity}`;
+        } else {
+            document.querySelector('.navbar').style.backgroundColor = '#f6f6f6cc';
+            document.querySelector('.tabs').style.backgroundColor = '#f6f6f6cc';
         }
-        document.querySelector('.navbar').style.backgroundColor = `#f6f6f6${hexOpacity}`;
-        document.querySelector('.tabs').style.backgroundColor = `#f6f6f6${hexOpacity}`;
-    } else {
-        document.querySelector('.navbar').style.backgroundColor = '#f6f6f6cc';
-        document.querySelector('.tabs').style.backgroundColor = '#f6f6f6cc';
-    }
-
-    // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
-    for (const tab of tabs) {
-        const groupElement = document.getElementById(tab.textContent);
-        if (groupElement) {
-            const groupRect = groupElement.getBoundingClientRect();
-            const tabsRect = tabsElement.getBoundingClientRect();
-            if (groupRect.top <= tabsRect.bottom) {
-                // 移除所有标签元素的选中状态
-                for (const otherTab of tabs) {
-                    otherTab.classList.remove('selected');
+        // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
+        for (const tab of tabs) {
+            const groupElement = document.getElementById(tab.textContent);
+            if (groupElement) {
+                const groupRect = groupElement.getBoundingClientRect();
+                const tabsRect = tabsElement.getBoundingClientRect();
+                if (groupRect.top <= tabsRect.bottom) {
+                    // 移除所有标签元素的选中状态
+                    for (const otherTab of tabs) {
+                        otherTab.classList.remove('selected');
+                    }
+                    // 设置当前标签元素为选中状态
+                    tab.classList.add('selected');
                 }
-                // 设置当前标签元素为选中状态
-                tab.classList.add('selected');
             }
         }
-    }
-});
-
+    });
 
     // 以下部分处理 Notion 数据的获取和处理
     try {
@@ -200,7 +189,7 @@ window.addEventListener('scroll', () => {
                 groups[groupTitle] = createGroupElement(groupTitle);
             }
             const brandElement = createBrandElement(item);
-            groups[groupTitle].appendChild(brandElement);
+            groups[groupTitle].brandsContainer.appendChild(brandElement); 
         }
         for (const groupTitle in groups) {
             brandsElement.appendChild(groups[groupTitle]);
@@ -213,7 +202,8 @@ window.addEventListener('scroll', () => {
         document.querySelector('footer').style.display = 'flex';
         document.querySelector('.subscribe').style.display = 'flex';
         tabsElement.style.display = 'block';
-    } catch (error) {
+    } 
+    catch (error) {
         // 如果在获取或处理数据时发生错误，隐藏加载动画并打印错误信息
         loadingElement.style.display = 'none';
         console.error("Failed to fetch brand data:", error);
@@ -222,7 +212,6 @@ window.addEventListener('scroll', () => {
     // 以下是关于菜单交互的代码
     let menuIcon = document.querySelector('.menu-icon');
     let menuOverlay = document.querySelector('.menu');
-
     menuIcon.addEventListener('click', function () {
         if(menuOverlay.style.display === 'block'){
             menuOverlay.style.display = 'none';
