@@ -10,7 +10,7 @@ body {
 }
 
 .background {
-    background: linear-gradient(120deg, #e8f0ec, #e9eff4);
+    background: linear-gradient(120deg, #f0f6f3, #f0f4f7);
     background-size: 200% 800%;
     -webkit-animation: BackgroundGradient 4s ease-in-out infinite;
     -moz-animation: BackgroundGradient 4s ease-in-out infinite;
