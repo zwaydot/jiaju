@@ -10,11 +10,11 @@ body {
 }
 
 .background {
-    background: linear-gradient(120deg, #f0f6f3, #f0f4f7);
+    background: linear-gradient(120deg, #e7e2db, #dde6e1);
     background-size: 200% 800%;
-    -webkit-animation: BackgroundGradient 4s ease-in-out infinite;
-    -moz-animation: BackgroundGradient 4s ease-in-out infinite;
-    animation: BackgroundGradient 4s ease-in-out infinite;
+    -webkit-animation: BackgroundGradient 6s ease-in-out infinite;
+    -moz-animation: BackgroundGradient 6s ease-in-out infinite;
+    animation: BackgroundGradient 6s ease-in-out infinite;
 }
 
 @-webkit-keyframes BackgroundGradient {
@@ -168,27 +168,29 @@ body {
     position: fixed;
     top: 0; 
     left: 0; 
-    display: none;
+    visibility: hidden;     
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out; 
     width: 100%;
     height: 100%;
     margin-top: 90px;
     background-color:#f6f6f6ee; 
     backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px);
-    transition: opacity 1s ease-in-out; 
     font-size: 16px;
     font-family: 'Noto Serif SC';
     font-weight: 400;
-    color: #333;
+    color: #666;
     text-align: center;
-    padding-top: 300px;
+    padding-top: 200px;
     line-height: 2em;
     z-index: 9999;
 }
 
 .menu.active {
-    display: block;
-    opacity: 1; /* Fully visible */
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
 }
 
 /* 锚点导航 */

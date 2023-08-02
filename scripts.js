@@ -212,15 +212,20 @@ window.onload = async () => {
     // 以下是关于菜单交互的代码
     let menuIcon = document.querySelector('.menu-icon');
     let menuOverlay = document.querySelector('.menu');
+    let menuActive = false; 
     menuIcon.addEventListener('click', function () {
-        if(menuOverlay.style.display === 'block'){
-            menuOverlay.style.display = 'none';
+        if (menuActive) {
+            menuOverlay.classList.remove('active');
             this.classList.remove('open');
             document.body.style.overflow = 'auto';
         } else {
-            menuOverlay.style.display = 'block';
+            menuOverlay.classList.add('active');
             this.classList.add('open');
             document.body.style.overflow = 'hidden';
         }
+        
+        menuActive = !menuActive; 
     });
+
+
 };
