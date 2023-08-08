@@ -330,7 +330,7 @@ main {
         box-sizing: border-box;
     }
     .brand-card:hover {
-        background-color: #8d8e6220;
+        background-color: #c0c1a420;
     }
     .brand-card:focus {
         background-color: #fefefeaa;
