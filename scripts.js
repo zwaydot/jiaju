@@ -16,9 +16,8 @@ const fetchNotionData = async () => {
         throw new Error("Failed to fetch data from Notion API");
     }
 
-    // 将响应的 JSON 数据转换成 JavaScript 对象
-    const data = await response.json();
-    return data;
+    // 将响应的 JSON 数据转换成 JavaScript 对象并返回
+    return await response.json();
 };
 
 // 函数用于根据 Notion 数据创建 DOM 元素并返回
@@ -82,20 +81,19 @@ const createGroupElement = (groupTitle) => {
 };
 
 // 创建导航、锚点标签变量，为后面计算高度做准备
-const navbar = document.querySelector('.navbar');
-const tabsElement = document.querySelector('.tabs');
+const navbarAndTabs = document.querySelector('.navbar-and-tabs');
+const tabsElement = navbarAndTabs.querySelector('.tabs');
 // 存储 tabsElement 最初的顶部偏移
 let originalTopOffset;
-// 函数用于根据滚动位置动态调整 tabsElement 的位置
-function adjustTabsPosition() {
-    const navbarHeight = navbar.getBoundingClientRect().height;
-    if (window.scrollY >= originalTopOffset - navbarHeight) {
-        tabsElement.style.position = 'fixed';
-        tabsElement.style.top = navbarHeight + 'px';
-        tabsElement.style.width = '100%';
-        tabsElement.style.zIndex = '1000';
+// 函数用于根据滚动位置动态调整 navbarAndTabs 的位置
+function adjustNavbarAndTabsPosition() {
+    const navbarAndTabsHeight = navbarAndTabs.getBoundingClientRect().height;
+    if (window.scrollY >= originalTopOffset - navbarAndTabsHeight) {
+        navbarAndTabs.style.position = 'fixed';
+        navbarAndTabs.style.top = '0';
+        navbarAndTabs.style.width = '100%';
     } else {
-        tabsElement.style.position = 'static';
+        navbarAndTabs.style.position = 'static';
     }
 }
 // 函数用于平滑滚动至指定元素
@@ -105,49 +103,55 @@ const scrollToElement = (elementId) => {
         console.error(`Element with ID ${elementId} not found.`);
         return;
     }
-    const yOffset = -navbar.getBoundingClientRect().height - 20;
+    const yOffset = -navbarAndTabs.getBoundingClientRect().height - 30;
     const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: 'smooth' });
+
+    // 添加延迟后的位置检查
+    setTimeout(() => {
+        const currentPosition = element.getBoundingClientRect().top;
+        if (Math.abs(currentPosition - tabsElement.getBoundingClientRect().bottom) > 5) {
+            window.scrollTo({ top: window.pageYOffset + currentPosition - tabsElement.getBoundingClientRect().bottom, behavior: 'smooth' });
+        }
+    }, 500); // 500毫秒后检查
 };
 
 // 当页面完全加载后执行的函数
 window.onload = async () => {
     // 添加一个点击状态变量
-    let scrollTriggeredByClick = false;  
+    const scrollTriggeredByClick = false;  
     // 获取所有的标签元素，为每个标签元素添加点击事件监听器
     const tabs = tabsElement.querySelectorAll('button');
+    const firstTab = tabs[0];
+
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             scrollToElement(tab.textContent);
         });
     });
+
     // 默认选中第一个tab
-    if(tabs.length > 0) {
-        tabs[0].classList.add('selected');
+    if (firstTab) {
+        firstTab.classList.add('selected');
     }
-    // 页面加载完成后，计算 originalTopOffset 值并调整 tabsElement 位置
+
+    // 页面加载完成后，计算 originalTopOffset 值并调整 navbarAndTabs 位置
     setTimeout(() => {
-        originalTopOffset = tabsElement.getBoundingClientRect().top + window.scrollY;
-        adjustTabsPosition();
+        originalTopOffset = navbarAndTabs.getBoundingClientRect().top + window.scrollY;
+        adjustNavbarAndTabsPosition();
     }, 500);
 
     // 添加滚动事件监听器
     window.addEventListener('scroll', () => {
-        // 调整标签元素的位置
-        adjustTabsPosition();
-        // 调整navbar和tabs的背景透明度
+        // 调整 navbarAndTabs 的位置
+        adjustNavbarAndTabsPosition();
+        // 调整 navbarAndTabs 的背景透明度
         let scrollY = window.scrollY;
-        if(scrollY <= 200){
-            let opacity = scrollY / 200 * 0.5;
-            let hexOpacity = Math.floor(opacity * 255).toString(16);
-            if(hexOpacity.length < 2){
-                hexOpacity = '0' + hexOpacity;
-            }
-            document.querySelector('.navbar').style.backgroundColor = `#f6f6f6${hexOpacity}`;
-            document.querySelector('.tabs').style.backgroundColor = `#f6f6f6${hexOpacity}`;
+        if(scrollY <= 100){
+            let opacity = scrollY / 100 * 0.5;
+            navbarAndTabs.style.backgroundColor = `rgba(246, 246, 246, ${opacity})`;
         } else {
-            document.querySelector('.navbar').style.backgroundColor = '#f6f6f6cc';
-            document.querySelector('.tabs').style.backgroundColor = '#f6f6f6cc';
+            navbarAndTabs.style.backgroundColor = 'rgba(246, 246, 246, 0.8)';
         }
         // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
         for (const tab of tabs) {
@@ -155,7 +159,7 @@ window.onload = async () => {
             if (groupElement) {
                 const groupRect = groupElement.getBoundingClientRect();
                 const tabsRect = tabsElement.getBoundingClientRect();
-                if (groupRect.top <= tabsRect.bottom) {
+                if (groupRect.top <= tabsRect.bottom + 20) { // 增加容差值
                     // 移除所有标签元素的选中状态
                     for (const otherTab of tabs) {
                         otherTab.classList.remove('selected');
@@ -209,7 +213,7 @@ window.onload = async () => {
         console.error("Failed to fetch brand data:", error);
     }
     
-    // 以下是关于菜单交互的代码
+    // 以���是关于菜单交互的代码
     let menuIcon = document.querySelector('.menu-icon');
     let menuOverlay = document.querySelector('.menu');
     let menuActive = false; 
