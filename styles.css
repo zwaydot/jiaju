@@ -387,6 +387,10 @@ footer p {
     body {
         background-color: #333;
     }
+     /* 反转 Lottie 动画颜色 */
+     lottie-player {
+        filter: invert(100%) hue-rotate(180deg);
+    }
 
     /* 微调导航栏 */
     .navbar-and-tabs {
