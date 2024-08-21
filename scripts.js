@@ -145,14 +145,14 @@ window.onload = async () => {
     window.addEventListener('scroll', () => {
         // 调整 navbarAndTabs 的位置
         adjustNavbarAndTabsPosition();
-        // 调整 navbarAndTabs 的背景透明度
-        let scrollY = window.scrollY;
-        if(scrollY <= 100){
-            let opacity = scrollY / 100 * 0.5;
-            navbarAndTabs.style.backgroundColor = `rgba(246, 246, 246, ${opacity})`;
+        
+        // 更新 body 的 data-scroll 属性
+        if (window.scrollY > 0) {
+            document.body.setAttribute('data-scroll', '1');
         } else {
-            navbarAndTabs.style.backgroundColor = 'rgba(246, 246, 246, 0.8)';
+            document.body.setAttribute('data-scroll', '0');
         }
+        
         // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
         for (const tab of tabs) {
             const groupElement = document.getElementById(tab.textContent);
@@ -213,7 +213,7 @@ window.onload = async () => {
         console.error("Failed to fetch brand data:", error);
     }
     
-    // 以���是关于菜单交互的代码
+    // 以是关于菜单��互的代码
     let menuIcon = document.querySelector('.menu-icon');
     let menuOverlay = document.querySelector('.menu');
     let menuActive = false; 

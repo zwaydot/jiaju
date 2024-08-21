@@ -6,13 +6,7 @@ body {
     font-family: Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f6f6f6;
-}
-
-.background {
-    background: linear-gradient(120deg, #e7e2db, #dde6e1);
-    background-size: 200% 800%;
-    animation: BackgroundGradient 6s ease-in-out infinite;
+    background-color: #e8e7e0;
 }
 
 @keyframes BackgroundGradient {
@@ -43,8 +37,13 @@ body {
     left: 0;
     width: 100%;
     z-index: 999;
-    background-color: rgba(246, 246, 246, 0);
+    background-color: #f6f6f600;
     backdrop-filter: blur(40px);
+    transition: background-color 0.3s ease;
+}
+
+body[data-scroll="1"] .navbar-and-tabs {
+    background-color: #f6f6f6b3;
 }
 
 .navbar {
@@ -77,40 +76,45 @@ body {
 
 .menu-icon {
     width: 30px;
+    height: 30px;
     cursor: pointer;
     position: relative;
-    transform: rotate(0deg);
     transition: .5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px 0;
 }
 
 .menu-icon span {
     display: block;
-    position: absolute;
     height: 2px;
-    width: 24px;
+    width: 100%;
     background: #333;
     border-radius: 2px;
     opacity: 1;
-    left: 0;
     transform: rotate(0deg);
     transition: .25s ease-in-out;
+    position: absolute;
+    left: 0;
 }
 
 .menu-icon span:nth-child(1) {
-    top: 0px;
+    top: 25%;
 }
 
 .menu-icon span:nth-child(2) {
-    top: 8px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .menu-icon span:nth-child(3) {
-    top: 16px;
+    bottom: 25%;
 }
 
 .menu-icon.open span:nth-child(1) {
-    top: 8px;
-    transform: rotate(135deg);
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
 }
 
 .menu-icon.open span:nth-child(2) {
@@ -118,8 +122,8 @@ body {
 }
 
 .menu-icon.open span:nth-child(3) {
-    top: 8px;
-    transform: rotate(-135deg);
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
 }
 
 .menu {
@@ -128,7 +132,7 @@ body {
     left: 0; 
     visibility: hidden;     
     opacity: 0;
-    transition: opacity 0.4s ease-in-out; 
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out; 
     width: 100%;
     height: 100%;
     margin-top: 90px;
@@ -147,7 +151,6 @@ body {
 .menu.active {
     visibility: visible;
     opacity: 1;
-    transition: opacity 0.4s ease-in-out;
 }
 
 .tabs {
@@ -272,7 +275,7 @@ main {
     .brand-card {
         display: flex;
         align-items: center;
-        background-color: #fefefeaa;
+        background-color: #ffffffaa;
         backdrop-filter: blur(20px);
         width: 100%;
         height: 100%;
@@ -283,10 +286,10 @@ main {
         box-sizing: border-box;
     }
     .brand-card:hover {
-        background-color: #c0c1a420;
+        background-color: #ffffff;
     }
     .brand-card:focus {
-        background-color: #fefefeaa;
+        background-color: #ffffffaa;
     }
     
     .brand-logo {
@@ -376,4 +379,95 @@ footer p {
     color: #888;
     text-align: left;
     margin: 20px 0;
+}
+
+/* 暗色模式样式 */
+@media (prefers-color-scheme: dark) {
+    /* 调整背景色 */
+    body {
+        background-color: #333;
+    }
+
+    /* 微调导航栏 */
+    .navbar-and-tabs {
+        background-color: #333;
+    }
+
+    body[data-scroll="1"] .navbar-and-tabs {
+        background-color: #333333cc;
+    }
+
+    .navbar h1 {
+        color: #bf6c66;
+    }
+
+    .navbar h2 {
+        color: #777;
+    }
+
+    /* 调整菜单图标 */
+    .menu-icon span {
+        background: #ccc;
+    }
+
+    /* 调整菜单 */
+    .menu {
+        background-color: #1a1a1aee;
+        color: #999;
+    }
+
+    /* 调整品牌卡片 */
+    .brand-card {
+        background-color: #2a2a2a;
+    }
+
+    .brand-card:hover {
+        background-color: #222222;
+    }
+
+    .brand-name {
+        color: #ccc;
+    }
+
+    .brand-intro {
+        color: #999;
+    }
+
+    /* 调整标签 */
+    .grouptag {
+        color: #ccc;
+        border-color: #444;
+    }
+
+    .selected {
+        color: #0e0e0e;
+        background: #84856a;
+    }
+
+    /* 调整组标题 */
+    .group h2 {
+        color: #ccc;
+    }
+
+    /* 调整订阅区域 */
+    .subscribe-content {
+        background-color: #00000033;
+    }
+
+    .subscribe-button {
+        background-color: #84856a;
+        color: #0e0e0e;
+    }
+
+    /* 调整页脚 */
+    footer p {
+        color: #777;
+    }
+
+    /* 调整加载动画 */
+    #loading {
+        background: #1a1a1a00;
+        color: #999;
+    }
+
 }
