@@ -4,15 +4,21 @@ const NOTION_API = "https://api.jiaju.design/v1/databases/3f12ac93b77c4250b1bddd
 // 定义异步函数用于获取 Notion API 数据
 const fetchNotionData = async () => {
     try {
-        console.log("Sending request to Notion API...");
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 秒超时
+
         const response = await fetch(NOTION_API, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({}) // 添加一个空的请求体
+            body: JSON.stringify({}), // 添加一个空的请求体
+            signal: controller.signal
         });
 
+        clearTimeout(timeoutId);
+
+        console.log("Sending request to Notion API...");
         console.log("Received response from Notion API:", response.status);
 
         if (!response.ok) {
@@ -24,6 +30,10 @@ const fetchNotionData = async () => {
         console.log("Successfully parsed JSON data");
         return data;
     } catch (error) {
+        if (error.name === 'AbortError') {
+            console.error("Request timed out");
+            throw new Error("请求超时，请检查网络连接并重试。");
+        }
         console.error("Error in fetchNotionData:", error);
         throw error;
     }
@@ -63,7 +73,7 @@ const createBrandElement = (item) => {
     // 添加品牌详细信息到品牌元素
     brandElement.appendChild(brandDetails);
 
-    // 点品牌元素时，打开品牌链接
+    // 点牌元素时，打开品牌链接
     brandElement.onclick = () => window.open(item.properties.URL?.url || '#', '_blank');
     return brandElement;
 };
@@ -130,10 +140,18 @@ window.onload = async () => {
     try {
         console.log("Window loaded, starting data fetch...");
         const loadingElement = document.getElementById('loading');
+        if (!loadingElement) {
+            console.error("Loading element not found");
+            return;
+        }
         loadingElement.style.display = 'block';
 
         const data = await fetchNotionData();
-        console.log("Data fetched successfully, processing...");
+        console.log("Data fetched successfully, processing...", data);
+
+        if (!data || !data.results || data.results.length === 0) {
+            throw new Error("No data received from API");
+        }
 
         // 遍历 Notion 数据，根据数据创建元素，并添加到页面
         const brandsElement = document.getElementById('brands');
@@ -164,7 +182,9 @@ window.onload = async () => {
     } catch (error) {
         console.error("Error in main function:", error);
         const loadingElement = document.getElementById('loading');
-        loadingElement.style.display = 'none';
+        if (loadingElement) {
+            loadingElement.style.display = 'none';
+        }
 
         // 显示错误信息给用户
         const errorMessage = document.createElement('p');
