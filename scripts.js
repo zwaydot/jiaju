@@ -3,21 +3,30 @@ const NOTION_API = "https://api.jiaju.design/v1/databases/3f12ac93b77c4250b1bddd
 
 // 定义异步函数用于获取 Notion API 数据
 const fetchNotionData = async () => {
-    // 使用 fetch API 发送 POST 请求到 Notion API
-    const response = await fetch(NOTION_API, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+    try {
+        console.log("Sending request to Notion API...");
+        const response = await fetch(NOTION_API, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({}) // 添加一个空的请求体
+        });
+
+        console.log("Received response from Notion API:", response.status);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
         }
-    });
 
-    // 检查响应是否成功，否则抛出错误
-    if (!response.ok) {
-        throw new Error("Failed to fetch data from Notion API");
+        const data = await response.json();
+        console.log("Successfully parsed JSON data");
+        return data;
+    } catch (error) {
+        console.error("Error in fetchNotionData:", error);
+        throw error;
     }
-
-    // 将响应的 JSON 数据转换成 JavaScript 对象并返回
-    return await response.json();
 };
 
 // 函数用于根据 Notion 数据创建 DOM 元素并返回
@@ -54,7 +63,7 @@ const createBrandElement = (item) => {
     // 添加品牌详细信息到品牌元素
     brandElement.appendChild(brandDetails);
 
-    // 点击品牌元素时，打开品牌链接
+    // 点���品牌元素时，打开品牌链接
     brandElement.onclick = () => window.open(item.properties.URL?.url || '#', '_blank');
     return brandElement;
 };
@@ -118,67 +127,13 @@ const scrollToElement = (elementId) => {
 
 // 当页面完全加载后执行的函数
 window.onload = async () => {
-    // 添加一个点击状态变量
-    const scrollTriggeredByClick = false;  
-    // 获取所有的标签元素，为每个标签元素添加点击事件监听器
-    const tabs = tabsElement.querySelectorAll('button');
-    const firstTab = tabs[0];
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            scrollToElement(tab.textContent);
-        });
-    });
-
-    // 默认选中第一个tab
-    if (firstTab) {
-        firstTab.classList.add('selected');
-    }
-
-    // 页面加载完成后，计算 originalTopOffset 值并调整 navbarAndTabs 位置
-    setTimeout(() => {
-        originalTopOffset = navbarAndTabs.getBoundingClientRect().top + window.scrollY;
-        adjustNavbarAndTabsPosition();
-    }, 500);
-
-    // 添加滚动事件监听器
-    window.addEventListener('scroll', () => {
-        // 调整 navbarAndTabs 的位置
-        adjustNavbarAndTabsPosition();
-        
-        // 更新 body 的 data-scroll 属性
-        if (window.scrollY > 0) {
-            document.body.setAttribute('data-scroll', '1');
-        } else {
-            document.body.setAttribute('data-scroll', '0');
-        }
-        
-        // 检查每个品牌分组元素的位置，如果其上边缘已经滚动到 tabs 元素的下边缘以下，则将对应的标签元素设为选中状态
-        for (const tab of tabs) {
-            const groupElement = document.getElementById(tab.textContent);
-            if (groupElement) {
-                const groupRect = groupElement.getBoundingClientRect();
-                const tabsRect = tabsElement.getBoundingClientRect();
-                if (groupRect.top <= tabsRect.bottom + 20) { // 增加容差值
-                    // 移除所有标签元素的选中状态
-                    for (const otherTab of tabs) {
-                        otherTab.classList.remove('selected');
-                    }
-                    // 设置当前标签元素为选中状态
-                    tab.classList.add('selected');
-                }
-            }
-        }
-    });
-
-    // 以下部分处理 Notion 数据的获取和处理
     try {
-        // 显示加载动画
+        console.log("Window loaded, starting data fetch...");
         const loadingElement = document.getElementById('loading');
         loadingElement.style.display = 'block';
 
-        // 获取 Notion 数据
         const data = await fetchNotionData();
+        console.log("Data fetched successfully, processing...");
 
         // 遍历 Notion 数据，根据数据创建元素，并添加到页面
         const brandsElement = document.getElementById('brands');
@@ -199,21 +154,27 @@ window.onload = async () => {
             brandsElement.appendChild(groups[groupTitle]);
         }
 
-        // 隐藏加载动画
+        console.log("Data processing complete, updating UI...");
         loadingElement.style.display = 'none';
-
-        // 显示底部信息和标签元素
         document.querySelector('footer').style.display = 'flex';
         document.querySelector('.subscribe').style.display = 'flex';
         tabsElement.style.display = 'block';
-    } 
-    catch (error) {
-        // 如果在获取或处理数据时发生错误，隐藏加载动画并打印错误信息
+
+        console.log("UI update complete");
+    } catch (error) {
+        console.error("Error in main function:", error);
+        const loadingElement = document.getElementById('loading');
         loadingElement.style.display = 'none';
-        console.error("Failed to fetch brand data:", error);
+
+        // 显示错误信息给用户
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = "加载失败，请稍后再试。错误详情：" + error.message;
+        errorMessage.style.color = 'red';
+        errorMessage.style.padding = '20px';
+        document.body.appendChild(errorMessage);
     }
     
-    // 以是关于菜单��互的代码
+    // 以是关于菜单互的代码
     let menuIcon = document.querySelector('.menu-icon');
     let menuOverlay = document.querySelector('.menu');
     let menuActive = false; 
@@ -230,6 +191,4 @@ window.onload = async () => {
         
         menuActive = !menuActive; 
     });
-
-
 };
