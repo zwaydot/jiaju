@@ -63,7 +63,7 @@ const createBrandElement = (item) => {
     // 添加品牌详细信息到品牌元素
     brandElement.appendChild(brandDetails);
 
-    // 点���品牌元素时，打开品牌链接
+    // 点品牌元素时，打开品牌链接
     brandElement.onclick = () => window.open(item.properties.URL?.url || '#', '_blank');
     return brandElement;
 };
